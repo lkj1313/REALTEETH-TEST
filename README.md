@@ -86,7 +86,7 @@
 
 1. **프로젝트 복제 (Git Clone)**:
    ```bash
-   git clone [https://github.com/lkj1313/REALTEETH-TEST.git](https://github.com/lkj1313/REALTEETH-TEST.git)
+   git clone https://github.com/lkj1313/REALTEETH-TEST.git
    cd REALTEETH-TEST
    ```
 2. **환경 변수 설정**:
