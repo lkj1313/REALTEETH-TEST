@@ -33,11 +33,12 @@ export const SearchSection = memo(
           !containerRef.current.contains(e.target as Node)
         ) {
           setResults([]);
+          inputRef.current?.blur();
         }
       };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
+
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
     }, [setResults]);
 
     return (
@@ -50,8 +51,13 @@ export const SearchSection = memo(
             debouncedSearch(val);
           }}
           onFocus={() => {
-            if (!isSelecting && keyword.trim().length > 0)
+            if (
+              !isSelecting &&
+              keyword.trim().length > 0 &&
+              results.length === 0
+            ) {
               setResults(searchLocations(keyword));
+            }
           }}
         />
         <SearchResultList
