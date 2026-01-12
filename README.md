@@ -65,8 +65,6 @@
 - **문제**: 외부 영역 클릭 시 리스트가 닫혔다가 인풋의 포커스 이벤트가 다시 트리거되면서 리스트가 다시 열리는 현상 발생.
 - **해결**: 외부 클릭 시 `input.blur()`를 호출하고, `onFocus` 시점에 결과값 존재 여부를 검사하는 방어 로직을 추가하여 UX를 개선했습니다.
 
----
-
 ### 🧠 Lodash Debounce를 활용한 검색 성능 최적화
 
 - **문제**: 사용자의 타이핑마다 API 요청이 발생하여 불필요한 네트워크 트래픽과 렌더링이 증가하는 문제 발생.
@@ -86,7 +84,7 @@
 
 1. **프로젝트 복제 (Git Clone)**:
    ```bash
-   git clone [https://github.com/lkj1313/REALTEETH-TEST.git](https://github.com/lkj1313/REALTEETH-TEST.git)
+   git clone https://github.com/lkj1313/REALTEETH-TEST.git
    cd REALTEETH-TEST
    ```
 2. **환경 변수 설정**:
@@ -96,8 +94,7 @@
    VITE_WEATHER_API_KEY=발급받은_오픈웨더_키
    ```
 3. **의존성 설치 및 로컬 실행**:
-
-```bash
-npm install
-npm run dev
-```
+   ```bash
+   npm install
+   npm run dev
+   ```
