@@ -96,8 +96,7 @@
    VITE_WEATHER_API_KEY=발급받은_오픈웨더_키
    ```
 3. **의존성 설치 및 로컬 실행**:
-
-```bash
-npm install
-npm run dev
-```
+   ```bash
+   npm install
+   npm run dev
+   ```
