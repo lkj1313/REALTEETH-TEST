@@ -14,7 +14,7 @@ export const HourlyForecast = ({ list }: { list: WeatherData[] }) => {
       </h3>
 
       <div className="scroll-container flex overflow-x-auto gap-4 pb-2 scrollbar-hide cursor-grab active:cursor-grabbing select-none">
-        {list.slice(0, 16).map((item) => (
+        {list.slice(0, 8).map((item) => (
           <div
             key={item.dt}
             className="text-center min-w-[75px] flex-shrink-0 bg-slate-50 rounded-2xl p-4 border border-slate-50 transition-all hover:bg-blue-50 hover:border-blue-100"
