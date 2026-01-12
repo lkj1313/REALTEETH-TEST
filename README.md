@@ -1,73 +1,103 @@
-# React + TypeScript + Vite
+# 🌤️ Weather Cast (전국 실시간 날씨 대시보드)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+사용자의 현재 위치뿐만 아니라, **전국 모든 지역**을 검색하여 실시간 기상 정보와 24시간 예보를 확인할 수 있는 반응형 웹 애플리케이션입니다. **FSD(Feature-Sliced Design) 아키텍처**와 **Zustand 전역 상태 관리**를 도입하여 데이터 일관성과 유지보수성을 극대화했습니다.
 
-Currently, two official plugins are available:
+## 🔗 배포 링크
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Live Demo**: [https://realteeth-test.vercel.app/](https://realteeth-test.vercel.app/)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 1. 사용 기술 스택 (Tech Stack)
 
-## Expanding the ESLint configuration
+| 분류              | 기술               | 상세 활용 범위                                          |
+| :---------------- | :----------------- | :------------------------------------------------------ |
+| **Framework**     | **React 19**       | 최신 React v19 기반의 컴포넌트 아키텍처 설계            |
+| **Build Tool**    | **Vite**           | 빠른 개발 서버 및 효율적인 빌드 환경 구축               |
+| **State**         | **Zustand**        | 즐겨찾기 데이터 전역 동기화 및 LocalStorage 지속성 관리 |
+| **Data Fetching** | **TanStack Query** | API 캐싱, 로딩/에러 상태 관리 최적화                    |
+| **Routing**       | **React Router 7** | 상세 페이지 및 지역별 라우팅 처리                       |
+| **Styling**       | **Tailwind CSS**   | 유틸리티 퍼스트 기반의 반응형 디자인 구현               |
+| **Language**      | **TypeScript**     | 정적 타입을 통한 데이터 구조 안정성 확보                |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 2. 구현 기능 상세 설명
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 📍 전국 지역 검색 및 실시간 기상 정보
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **현재 위치 자동 탐색**: 앱 접속 시 브라우저 Geolocation API를 사용하여 접속 지역의 날씨를 즉시 노출합니다.
+- **전국 단위 지역 검색**: 카카오 로컬 API를 연동하여 전국 모든 시/군/구 단위의 지역을 자유롭게 검색하고 날씨를 확인할 수 있습니다.
+- **상세 기상 지표**: 기온, 체감 온도, 습도, 풍속 등 다각도의 기상 데이터를 오픈웨더 API를 통해 실시간으로 제공합니다.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 📅 시간별 예보 시스템
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **24시간 흐름 파악**: 향후 24시간 동안의 기온 변화 데이터를 시간대별로 나열하여 사용자 편의성을 높였습니다.
+- **수평 스크롤 UI**: 모바일 환경에서도 쾌적하게 예보를 확인할 수 있도록 최적화된 스크롤 레이아웃을 제공합니다.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🔍 검색 최적화 및 UX 개선
+
+- **네트워크 최적화**: `Lodash Debounce`를 적용하여 사용자의 타이핑마다 발생하는 불필요한 API 요청을 방지했습니다.
+- **스마트 포커스 제어**: 검색창 외부 클릭 시 리스트가 자동으로 닫히도록 설계하여 쾌적한 UX를 유지합니다.
+
+### ⭐ 지능형 즐겨찾기 시스템
+
+- **전역 데이터 동기화**: `Zustand`를 통해 검색 결과창과 하단 즐겨찾기 목록 간의 상태를 실시간으로 동기화했습니다.
+- **개인화 관리**: 자주 찾는 지역을 최대 6개까지 등록할 수 있으며, 각 지역에 커스텀 닉네임을 설정할 수 있습니다.
+- **데이터 지속성**: `localStorage` 연동으로 브라우저 재접속 시에도 사용자의 즐겨찾기 목록이 유지됩니다.
+
+---
+
+## 3. 기술적 의사결정 및 이유
+
+### 🏗️ FSD (Feature-Sliced Design) 도입
+
+- **문제**: 기능 확장 시 컴포넌트 간 의존성이 복잡해지고 유지보수가 어려워지는 현상 발생.
+- **해결**: 레이어별(`Entities`, `Features`, `Widgets`)로 책임을 명확히 분리하여 독립적인 모듈 구조를 구축했습니다.
+
+### 🐻 Zustand를 활용한 전역 상태 통합
+
+- **문제**: 여러 컴포넌트에서 동일한 즐겨찾기 데이터를 사용할 때 데이터가 실시간으로 동기화되지 않는 이슈 발생.
+- **해결**: 전역 스토어를 도입하여 '단일 진실 공급원(Single Source of Truth)'을 구축함으로써 앱 전체의 데이터 일관성을 확보했습니다.
+
+### 🖱️ 검색 UX 버그 해결 (Focus-Blur 제어)
+
+- **문제**: 외부 영역 클릭 시 리스트가 닫혔다가 인풋의 포커스 이벤트가 다시 트리거되면서 리스트가 다시 열리는 현상 발생.
+- **해결**: 외부 클릭 시 `input.blur()`를 호출하고, `onFocus` 시점에 결과값 존재 여부를 검사하는 방어 로직을 추가하여 UX를 개선했습니다.
+
+---
+
+### 🧠 Lodash Debounce를 활용한 검색 성능 최적화
+
+- **문제**: 사용자의 타이핑마다 API 요청이 발생하여 불필요한 네트워크 트래픽과 렌더링이 증가하는 문제 발생.
+- **해결**: `lodash.debounce`를 적용하여 입력 이벤트를 일정 시간 지연시킴으로써 실제로 의미 있는 요청만 전송되도록 최적화했습니다.
+
+### 🔄 TanStack Query (React Query) 기반의 서버 상태 관리
+
+- **문제**: API 호출 시 로딩, 에러 처리를 위한 로컬 상태가 중복되고, 불필요한 재요청으로 인한 리소스 낭비 발생.
+- **해결**: TanStack Query를 도입하여 데이터 패칭 로직을 선언적으로 분리하고, 자동 캐싱 기능을 통해 사용자에게 끊김 없는 데이터 경험을 제공했습니다.
+
+### 💾 LocalStorage 기반의 데이터 지속성(Persistence) 확보
+
+- **문제**: 브라우저를 새로고침하거나 재접속할 경우, 사용자가 설정한 즐겨찾기 지역과 커스텀 닉네임이 초기화되는 문제.
+- **해결**: Zustand의 `persist` 미들웨어를 활용하여 별도의 백엔드 구축 없이도 클라이언트 측에서 데이터를 영구적으로 저장하고 관리할 수 있도록 설계했습니다.
+
+## 4. 프로젝트 실행 방법
+
+1. **프로젝트 복제 (Git Clone)**:
+   ```bash
+   git clone [https://github.com/lkj1313/REALTEETH-TEST.git](https://github.com/lkj1313/REALTEETH-TEST.git)
+   cd REALTEETH-TEST
+   ```
+2. **환경 변수 설정**:
+   프로젝트 루트 디렉토리에 `.env.local` 파일을 생성하고 아래 키를 입력합니다.
+   ```env
+   VITE_KAKAO_REST_API_KEY=발급받은_카카오_키
+   VITE_WEATHER_API_KEY=발급받은_오픈웨더_키
+   ```
+3. **의존성 설치 및 로컬 실행**:
+
+```bash
+npm install
+npm run dev
 ```
